@@ -1,42 +1,172 @@
-#root {
-  max-width: 1280px;
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.container {
+  width: 80%;
   margin: 0 auto;
-  padding: 2rem;
+}
+
+/* Seção de Introdução */
+.intro {
+  background: url('https://via.placeholder.com/1600x900') no-repeat center center/cover;
+  height: 100vh;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.intro h1 {
+  font-size: 60px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.intro p {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.cta-button {
+  background-color: #ff6347;
+  color: white;
+  font-size: 22px;
+  padding: 15px 40px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.cta-button:hover {
+  background-color: #e5532c;
+}
+
+/* Seções principais */
+.section {
+  padding: 80px 0;
+  opacity: 0;
+  transform: translateY(100px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Sobre o Smart Collect */
+.about {
+  background-color: #fff;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.about h2 {
+  margin-bottom: 30px;
+  font-size: 36px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.about img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 30px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Características */
+.features {
+  background-color: #f8f8f8;
 }
 
-.card {
-  padding: 2em;
+.features h2 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-.read-the-docs {
-  color: #888;
+.features-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.feature {
+  width: 30%;
+  text-align: center;
+}
+
+.feature h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.feature p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Depoimentos */
+.testimonials {
+  background-color: #eee;
+  padding: 50px 0;
+}
+
+.testimonial-slider {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.testimonial {
+  margin-bottom: 30px;
+  font-style: italic;
+  font-size: 18px;
+  max-width: 600px;
+}
+
+.testimonial span {
+  margin-top: 15px;
+  font-weight: bold;
+  display: block;
+}
+
+/* Formulário de Contato */
+.contact form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact input, .contact textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.contact button {
+  background-color: #ff6347;
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.contact button:hover {
+  background-color: #e5532c;
 }
