@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './App.css';
-import NavBar from './components/Header/Header';
 import Footer from './components/footer/Footer';
 import Header from './components/Header/Header';
 

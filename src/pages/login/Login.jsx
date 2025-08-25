@@ -1,18 +1,16 @@
-import './Login.css'
-
-import React, { useState } from 'react';
-import './Login.css';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router';
+import styles from './Login.module.css';
 
 export default function Login() {
-  // Estados para armazenar as entradas
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  // Função para validar o formulário
   const handleLogin = (e) => {
     e.preventDefault();
-    
+
     if (!email || !password) {
       setError('Por favor, preencha todos os campos.');
       return;
@@ -23,40 +21,47 @@ export default function Login() {
       return;
     }
 
+    if (password.length < 8) {
+      setError('A senha precisa ter no mínimo 8 caracteres.');
+      return;
+    }
+
     setError('');
-    alert('Login realizado com sucesso!');
-    // Aqui você pode redirecionar ou chamar uma API para autenticação
+    navigate('/');
   };
 
   return (
-    <div className="login-container">
+    <div className={styles.loginContainer}>
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
-        <div className="input-group">
+        <div className={styles.inputGroup}>
           <label htmlFor="email">E-mail</label>
-          <input 
-            type="email" 
-            id="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
+          <input
+            type="text"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Digite seu e-mail"
-            required 
           />
         </div>
-        <div className="input-group">
+        <div className={styles.inputGroup}>
           <label htmlFor="password">Senha</label>
-          <input 
-            type="password" 
-            id="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            placeholder="Digite sua senha" 
-            required 
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Digite sua senha"
           />
         </div>
-        {error && <div className="error">{error}</div>}
-        <button type="submit" className="login-button">Entrar</button>
+        <button type="submit" className={styles.loginButton}>
+          Entrar
+        </button>
+        <span>
+          Não tem cadastro? <Link to="/register">Crie</Link> uma conta
+        </span>
+        {error && <div className={styles.error}>{error}</div>}
       </form>
     </div>
   );
-};
+}

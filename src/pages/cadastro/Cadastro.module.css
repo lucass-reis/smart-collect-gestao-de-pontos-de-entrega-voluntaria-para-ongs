@@ -1,0 +1,111 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Container */
+.login-container {
+  background-color: #fff;
+  padding: 40px 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 100vw;
+  max-width: 700px;
+}
+
+/* Título */
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* Formulário em grid */
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Campos que ocupam 2 colunas */
+form .input-group.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Grupo de inputs */
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #555;
+}
+
+.input-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #4e54c8;
+}
+
+/* Erro */
+.error {
+  grid-column: 1 / -1;
+  color: #e74c3c;
+  margin-top: -10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Botão */
+.login-button {
+  grid-column: 1 / -1;
+  padding: 12px;
+  background-color: #4e54c8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #3b40a0;
+}
+
+/* Link de login */
+form span {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+}
