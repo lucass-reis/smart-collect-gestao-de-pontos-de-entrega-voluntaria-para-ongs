@@ -89,7 +89,7 @@ Exemplo de protótipo de dashboard:
   <tr>
     <td align="center" width="200">
       <img src="https://github.com/user-attachments/assets/c5cf0acd-8137-43b2-a02c-5d395ddd17fe" width="100px" style="border-radius:50%;" alt="Gabriel da Silva Mendes"/><br/>
-      <b>Gabriel da Silva Mendes</b><br/>
+      <b>Gabriel Mendes</b><br/>
       <a href="https://www.linkedin.com/in/gabrieldasilvamendes">
         <img src="https://img.shields.io/badge/LinkedIn-Perfil-blue?style=flat-square&logo=linkedin" />
       </a>
