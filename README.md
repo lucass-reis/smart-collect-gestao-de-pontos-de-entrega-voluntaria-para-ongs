@@ -14,7 +14,7 @@ O **Smart Collect** é uma solução tecnológica voltada ao **gerenciamento int
 A plataforma integra **Internet das Coisas (IoT)**, **sensoriamento em tempo real** e **análise de dados**, promovendo práticas sustentáveis e reduzindo custos operacionais.  
 
 <p align="center">
- <img width="1428" height="889" alt="image" src="https://github.com/user-attachments/assets/6b994876-f558-4bb4-8a7a-b5ca0a290fba" />
+ <img width="879" height="711" alt="image" src="https://github.com/user-attachments/assets/5c6bbaa5-cf53-4057-bc8c-0e404d3518f7" />
 </p>  
 
 Este sistema foi desenvolvido como **Trabalho de Conclusão de Curso (TCC)** no curso de **Análise e Desenvolvimento de Sistemas** da **FATEC Zona Leste**.  
