@@ -1,10 +1,5 @@
 # Smart Collect  
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Licença-MIT-green?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Contribuições-Bem%20vindas-blue?style=for-the-badge"/>
-</p>
 
 <br>
 
