@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Contribuições-Bem%20vindas-blue?style=for-the-badge"/>
 </p>
 
----
+<br>
 
 ## 1. Introdução  
 
@@ -19,7 +19,7 @@ A plataforma integra **Internet das Coisas (IoT)**, **sensoriamento em tempo rea
 
 Este sistema foi desenvolvido como **Trabalho de Conclusão de Curso (TCC)** no curso de **Análise e Desenvolvimento de Sistemas** da **FATEC Zona Leste**.  
 
----
+<br>
 
 ## 2. Objetivos  
 
@@ -34,7 +34,7 @@ O projeto tem como metas principais:
   <img src="https://dummyimage.com/600x300/eeeeee/000000.png&text=Exemplo+-+Dashboard+Indicadores" alt="Dashboard exemplo"/>
 </p>  
 
----
+<br>
 
 ## 3. Funcionalidades  
 
@@ -54,12 +54,15 @@ A solução promove práticas ecológicas em consonância com políticas de cida
   <img src="https://dummyimage.com/600x250/cccccc/000000.png&text=Exemplo+-+Coletor+Sensorizado" alt="Exemplo coletor sensor"/>
 </p>  
 
----
+<br>
 
 ## 4. Tecnologias Utilizadas  
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=html,css,js,react,nodejs,cpp,firebase,docker" />
+</p>
+
+<center>
 
 | **Camada**          | **Tecnologias**                                     |
 |----------------------|-----------------------------------------------------|
@@ -69,11 +72,9 @@ A solução promove práticas ecológicas em consonância com políticas de cida
 | **IoT**              | Sensores ultrassônicos · Microcontrolador ESP32     |
 | **Infraestrutura**   | Docker/Podman · APIs REST                           |
 
-</p>  
+</center>
 
-
----
-
+<br>
 
 ## 5. Demonstrações  
 
@@ -87,7 +88,7 @@ Exemplo de protótipo de dashboard:
   <img src="https://dummyimage.com/700x400/cccccc/000000.png&text=Exemplo+Dashboard" alt="Exemplo Dashboard"/>
 </p>  
 
----
+<br>
 
 ## 6. Equipe de Desenvolvimento  
 
@@ -95,8 +96,7 @@ Exemplo de protótipo de dashboard:
 - Juan Farias da Rocha — [LinkedIn](https://www.linkedin.com/in/juan-farias-da-rocha)  
 - Victor Novaes Cardoso — [LinkedIn](https://www.linkedin.com/in/victorncardoso)  
 
----
-
+<br>
 
 <p align="center">  
   <sub>© 2025 Smart Collect — Todos os direitos reservados</sub>  
