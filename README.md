@@ -50,29 +50,21 @@ Alertas automáticos são enviados quando a coleta é necessária, evitando desl
 ### 🔹 Sustentabilidade  
 A solução promove práticas ecológicas em consonância com políticas de cidades inteligentes.  
 
-<p align="center">
-  <img src="https://dummyimage.com/600x250/cccccc/000000.png&text=Exemplo+-+Coletor+Sensorizado" alt="Exemplo coletor sensor"/>
-</p>  
-
 <br>
 
 ## 4. Tecnologias Utilizadas  
-
-<p align="center">
+<div align="center">
   <img src="https://skillicons.dev/icons?i=html,css,js,react,nodejs,cpp,firebase,docker" />
-</p>
 
-<center>
+  | **Camada**          | **Tecnologias**                                     |
+  |----------------------|-----------------------------------------------------|
+  | **Front-end**        | HTML · CSS · JavaScript · React.js                  |
+  | **Back-end**         | C++                                                 |
+  | **Banco de Dados**   | Firebase (armazenamento em tempo real)              |
+  | **IoT**              | Sensores ultrassônicos · Microcontrolador ESP32     |
+  | **Infraestrutura**   | Docker/Podman · APIs REST                           |
+</div>
 
-| **Camada**          | **Tecnologias**                                     |
-|----------------------|-----------------------------------------------------|
-| **Front-end**        | HTML · CSS · JavaScript · React.js                  |
-| **Back-end**         | C++                                                 |
-| **Banco de Dados**   | Firebase (armazenamento em tempo real)              |
-| **IoT**              | Sensores ultrassônicos · Microcontrolador ESP32     |
-| **Infraestrutura**   | Docker/Podman · APIs REST                           |
-
-</center>
 
 <br>
 
