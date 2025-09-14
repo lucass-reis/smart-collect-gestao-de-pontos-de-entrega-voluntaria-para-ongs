@@ -21,7 +21,6 @@ body {
   background: url("https://via.placeholder.com/1600x900") no-repeat center
     center/cover;
   min-height: 100vh;
-  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,7 +40,7 @@ body {
 }
 
 .cta-button {
-  background: linear-gradient(90deg, #ff7a59, #ff6347);
+  background: linear-gradient(90deg, #003366, #24496f);
   color: white;
   font-size: clamp(16px, 2.5vw, 22px);
   padding: 14px 36px;
@@ -50,7 +49,6 @@ body {
   text-decoration: none;
   border-radius: 10px;
   transition: transform 0.05s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-  box-shadow: 0 8px 18px rgba(255, 99, 71, 0.35);
 }
 
 .cta-button:hover {
@@ -197,4 +195,11 @@ body {
 
 .contact button:active {
   transform: translateY(1px);
+}
+
+.login-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }

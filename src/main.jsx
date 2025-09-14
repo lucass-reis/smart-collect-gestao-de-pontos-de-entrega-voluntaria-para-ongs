@@ -1,18 +1,19 @@
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import App from './App.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import './index.css';
 import Cadastro from './pages/cadastro/Cadastro.jsx';
 import CollectionPoints from './pages/collection-points/CollectionPoints.jsx';
 import CollectionStatus from './pages/collection-status/CollectionStatus.jsx';
 import Login from './pages/login/Login.jsx';
-import './index.css';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Navigate to="/collection-status" replace />} />
+      <Route path="/" element={ <App /> } />
       <Route path="/collection-status" element={<ProtectedRoute><CollectionStatus /></ProtectedRoute>} />
-      <Route path="/collection-points" element={<ProtectedRoute><CollectionPoints /></ProtectedRoute>} />
+      <Route path="/collection-points"  element={<ProtectedRoute><CollectionPoints /></ProtectedRoute>} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Cadastro />} />
       <Route path="*" element={<Navigate to="/login" replace />} />

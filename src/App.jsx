@@ -26,7 +26,12 @@ function App() {
         <div className="intro-text">
           <h1>Revolucione as doações com IoT</h1>
           <p>Smart Collect otimiza o fluxo de doações e transforma a gestão das ONGs usando a tecnologia de Internet das Coisas.</p>
-          <a href="#contato" className="cta-button">Junte-se a nós</a>
+          <div className="login-section">
+            <p style={{
+              marginBottom: "0"
+            }}>É uma ONG?</p>
+            <a href="/login" className="cta-button">Junte-se a nós</a>
+          </div>
         </div>
       </section>
 

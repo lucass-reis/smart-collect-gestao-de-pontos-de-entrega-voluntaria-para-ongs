@@ -3,7 +3,7 @@
   background: linear-gradient(135deg, #66eaa6 0%, #19a352 100%);
   display: flex;
   flex-direction: column;
-  font-family: 'Inter', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .header {

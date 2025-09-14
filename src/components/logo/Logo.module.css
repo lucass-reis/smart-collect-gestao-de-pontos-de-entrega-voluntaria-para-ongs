@@ -1,0 +1,22 @@
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.logoGreenColor {
+    color: #19a352;
+}
+
+.logoBlueColor {
+    color: #003366;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.logoText {
+    display: flex;
+    gap: .3rem;
+}
