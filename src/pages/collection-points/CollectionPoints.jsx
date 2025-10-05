@@ -1,11 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as Toast from '@radix-ui/react-toast';
-import { Dialog, Text, TextField } from '@radix-ui/themes';
+import { Button, Dialog, Flex, Text, TextField } from '@radix-ui/themes';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import z from 'zod';
-import CustomDialog from '../../components/dialog/CustomDialog.jsx';
 import { logout } from '../../utils/auth.js';
 import styles from './CollectionPoints.module.css';
 
@@ -14,15 +13,17 @@ import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firesto
 import { db } from '../../firebase/firebase.js';
 
 const PEVSchema = z.object({
+  PEVId: z.string().nonempty("O campo é obrigatório!").min(2, "O código do PEV precisar ter ao menos 2 caracteres"),
   name: z.string().nonempty("O campo é obrigatório!").min(3, "O nome precisar ter ao menos 3 caracteres"),
   zipCode: z.string().nonempty("O campo é obrigatório!"),
+  address: z.string().nonempty("O campo é obrigatório!").min(5, "O endereço precisar ter ao menos 5 caracteres"),
   PEVPassword: z.string().nonempty("O campo é obrigatório!").min(8, "A senha do PEV deve ter ao menos 8 caracteres"),
 });
 
 export default function CollectionPoints() {
   const [collectionPoints, setCollectionPoints] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [toastOpen, setToastOpen] = useState(false); // controla toast
+  const [toastOpen, setToastOpen] = useState(false);
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
@@ -46,20 +47,19 @@ export default function CollectionPoints() {
 
   const onSubmit = async (data) => {
     try {
-      // Adiciona documento no Firestore
       await addDoc(collection(db, "collectionPoints"), {
         ...data,
         createdAt: new Date()
       });
-      setToastOpen(true);          // Mostra toast
-      setIsDialogOpen(false);      // Fecha dialog
-      reset();                      // Limpa formulário
+      setToastOpen(true);
+      setIsDialogOpen(false);
+      reset();
     } catch (err) {
       console.error("Erro ao cadastrar PEV:", err);
     }
   };
 
-  const handleAddPoint = () => {};
+  const handleAddPoint = () => setIsDialogOpen(true);
   const handleViewStatus = () => navigate('/collection-status');
   const handleProfile = () => navigate('/view-profile');
   const handleSmartCollectClick = () => navigate('/collection-points');
@@ -86,72 +86,23 @@ export default function CollectionPoints() {
 
         <main className={styles.main}>
           <div className={styles.content}>
-            <div className={styles.pageHeader}>
-              <h2>Meus Pontos de Coleta</h2>
-              <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                  <Dialog.Trigger>
-                    <button onClick={handleAddPoint} className={styles.primaryAddButton}>
-                      Adicionar ponto
-                    </button>
-                  </Dialog.Trigger>
-
-                  <CustomDialog 
-                    withForm={true}
-                    title="Adicione um PEV (Ponto de Entrega Voluntária)"
-                    description="Adicione um PEV para o monitoramento eficiente"
-                    submitButtonText="Adicionar"
-                    onSubmit={handleSubmit(onSubmit)}
-                  >
-                    <label className={styles.inputStyle}>
-                      <Text as="div" size="2" mb="1" weight="bold">
-                        Nome
-                      </Text>
-                      <TextField.Root placeholder="Digite um apelido para esse PEV" {...register("name")} />
-                      {errors.name && <span className={styles.errorMessage}>{errors.name.message}</span>}
-                    </label>
-                    <label className={styles.inputStyle}>
-                      <Text as="div" size="2" mb="1" weight="bold">
-                        CEP
-                      </Text>
-                      <TextField.Root placeholder="Digite o local aproximado onde o PEV ficará" {...register("zipCode")} />
-                      {errors.address && <span className={styles.errorMessage}>{errors.address.message}</span>}
-                    </label>
-                    <label className={styles.inputStyle}>
-                      <Text as="div" size="2" mb="1" weight="bold">
-                        Senha
-                      </Text>
-                      <TextField.Root type='password' maxLength={14} placeholder="Digite a senha de desbloqueio do dispositivo do PEV" {...register("PEVPassword")} />
-                      {errors.PEVPassword && <span className={styles.errorMessage}>{errors.PEVPassword.message}</span>}
-                    </label>
-                  </CustomDialog>
-                </Dialog.Root>
-            </div>
-
-            {collectionPoints.length === 0 ? (
-              <div className={styles.emptyState}>
-                <div className={styles.emptyIcon}>
-                  <svg viewBox="0 0 64 64" fill="none">
-                    <circle cx="32" cy="32" r="30" stroke="#43B02A" strokeWidth="4"/>
-                    <path d="M20 32l8 8 16-16" stroke="#43B02A" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <h3>Nenhum ponto de coleta encontrado</h3>
-                <p>Sua conta é recente, clique no botão abaixo para adicionar seu primeiro ponto de coleta.</p>
-
-                <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                  <Dialog.Trigger>
-                    <button onClick={handleAddPoint} className={styles.primaryAddButton}>
-                      Adicionar Primeiro Ponto
-                    </button>
-                  </Dialog.Trigger>
-
-                  <CustomDialog 
-                    withForm={true}
-                    title="Adicione um PEV (Ponto de Entrega Voluntária)"
-                    description="Adicione um PEV para o monitoramento eficiente"
-                    submitButtonText="Adicionar"
-                    onSubmit={handleSubmit(onSubmit)}
-                  >
+            <Dialog.Root open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <Dialog.Content maxWidth="500px" asChild>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Flex gap="3" mt="4" justify="end">
+                    <Dialog.Title>
+                      Adicione um PEV (Ponto de Entrega Voluntária)
+                    </Dialog.Title>
+                    <Dialog.Close>
+                      <Button variant="soft" color="red">
+                        X
+                      </Button>
+                    </Dialog.Close>
+                  </Flex>
+                  <Dialog.Description>
+                    Adicione um PEV para o monitoramento eficiente
+                  </Dialog.Description>
+                  <Flex direction="column" gap="3" className={styles.dialogContent}>
                     <label className={styles.inputStyle}>
                       <Text as="div" size="2" mb="1" weight="bold">
                         Código do PEV
@@ -168,33 +119,66 @@ export default function CollectionPoints() {
                     </label>
                     <label className={styles.inputStyle}>
                       <Text as="div" size="2" mb="1" weight="bold">
+                        CEP
+                      </Text>
+                      <TextField.Root placeholder="Digite o local aproximado onde o PEV ficará" {...register("zipCode")} />
+                      {errors.zipCode && <span className={styles.errorMessage}>{errors.zipCode.message}</span>}
+                    </label>
+                    <label className={styles.inputStyle}>
+                      <Text as="div" size="2" mb="1" weight="bold">
                         Endereço
                       </Text>
-                      <TextField.Root placeholder="Digite o local aproximado onde o PEV ficará" {...register("address")} />
+                      <TextField.Root placeholder="Digite o endereço do PEV" {...register("address")} />
                       {errors.address && <span className={styles.errorMessage}>{errors.address.message}</span>}
                     </label>
                     <label className={styles.inputStyle}>
                       <Text as="div" size="2" mb="1" weight="bold">
                         Senha
                       </Text>
-                      <TextField.Root placeholder="Digite a senha de desbloqueio do dispositivo do PEV" {...register("PEVPassword")} />
+                      <TextField.Root type='password' maxLength={14} placeholder="Digite a senha de desbloqueio do dispositivo do PEV" {...register("PEVPassword")} />
                       {errors.PEVPassword && <span className={styles.errorMessage}>{errors.PEVPassword.message}</span>}
                     </label>
-                  </CustomDialog>
-                </Dialog.Root>
+                    <Flex justify="end" className={styles.dialogContent}>
+                      <Button variant="soft" color="mint" type="submit">
+                        Adicionar
+                      </Button>
+                    </Flex>
+                  </Flex>
+                </form>
+              </Dialog.Content>
+              <div className={styles.pageHeader}>
+                <h2>Meus Pontos de Coleta</h2>
+                <button onClick={handleAddPoint} className={styles.primaryAddButton}>
+                  Adicionar ponto
+                </button>
               </div>
-            ) : (
-              <div className={styles.pointsList}>
-                {collectionPoints.map((point) => (
-                  <div key={point.id} className={styles.pointCard}>
-                    <div className={styles.pointInfo}>
-                      <h3>{point.name}</h3>
-                      <p>{point.zipCode}</p>
-                    </div>
+              {collectionPoints.length === 0 ? (
+                <div className={styles.emptyState}>
+                  <div className={styles.emptyIcon}>
+                    <svg viewBox="0 0 64 64" fill="none">
+                      <circle cx="32" cy="32" r="30" stroke="#43B02A" strokeWidth="4"/>
+                      <path d="M20 32l8 8 16-16" stroke="#43B02A" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
                   </div>
-                ))}
-              </div>
-            )}
+                  <h3>Nenhum ponto de coleta encontrado</h3>
+                  <p>Sua conta é recente, clique no botão abaixo para adicionar seu primeiro ponto de coleta.</p>
+                  <button onClick={handleAddPoint} className={styles.primaryAddButton}>
+                    Adicionar Primeiro Ponto
+                  </button>
+                </div>
+              ) : (
+                <div className={styles.pointsList}>
+                  {collectionPoints.map((point) => (
+                    <div key={point.id} className={styles.pointCard}>
+                      <div className={styles.pointInfo}>
+                        <h3>{point.name}</h3>
+                        <p>{point.address}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Dialog.Root>
           </div>
         </main>
       </div>

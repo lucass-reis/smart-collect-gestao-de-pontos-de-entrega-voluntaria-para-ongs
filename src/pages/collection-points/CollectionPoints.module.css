@@ -180,13 +180,13 @@
 
 /* Points List */
 .pointsList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 24px;
 }
 
 .pointCard {
-  background: #f8f9fe;
+  background: white;
   border-radius: 16px;
   padding: 24px;
   border: 1px solid #e0e0e0;
@@ -196,6 +196,12 @@
 .pointCard:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #66eaa6, #19a352);
+  cursor: pointer;
+
+  * {
+    color: white;
+  }
 }
 
 .pointInfo h3 {
