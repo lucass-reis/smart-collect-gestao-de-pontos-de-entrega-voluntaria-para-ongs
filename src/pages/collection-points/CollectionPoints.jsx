@@ -11,6 +11,7 @@ import styles from './CollectionPoints.module.css';
 // Firebase
 import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../../firebase/firebase.js';
+import { getAuth } from 'firebase/auth';
 
 const PEVSchema = z.object({
   PEVId: z.string().nonempty("O campo é obrigatório!").min(2, "O código do PEV precisar ter ao menos 2 caracteres"),
@@ -34,7 +35,9 @@ export default function CollectionPoints() {
   useEffect(() => {
     const q = query(collection(db, "collectionPoints"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const points = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const points = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).filter(point => {
+        return point.owner === getAuth().currentUser?.uid;
+      });
       setCollectionPoints(points);
     });
     return () => unsubscribe();
@@ -47,8 +50,15 @@ export default function CollectionPoints() {
 
   const onSubmit = async (data) => {
     try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (!user) {
+        alert("401 - Unauthorized");
+        return;
+      }
       await addDoc(collection(db, "collectionPoints"), {
         ...data,
+        owner: user.uid,
         createdAt: new Date()
       });
       setToastOpen(true);
@@ -58,6 +68,10 @@ export default function CollectionPoints() {
       console.error("Erro ao cadastrar PEV:", err);
     }
   };
+
+  const handleGoToCollectionStatus = (point) => {
+    navigate(`/collection-status/${point.id}`, { state: { point } });
+  }
 
   const handleAddPoint = () => setIsDialogOpen(true);
   const handleViewStatus = () => navigate('/collection-status');
@@ -169,11 +183,9 @@ export default function CollectionPoints() {
               ) : (
                 <div className={styles.pointsList}>
                   {collectionPoints.map((point) => (
-                    <div key={point.id} className={styles.pointCard}>
-                      <div className={styles.pointInfo}>
-                        <h3>{point.name}</h3>
-                        <p>{point.address}</p>
-                      </div>
+                    <div onClick={() => handleGoToCollectionStatus(point)} key={point.id} className={styles.pointCard}>
+                      <h3>{point.name}</h3>
+                      <p>{point.address}</p>
                     </div>
                   ))}
                 </div>

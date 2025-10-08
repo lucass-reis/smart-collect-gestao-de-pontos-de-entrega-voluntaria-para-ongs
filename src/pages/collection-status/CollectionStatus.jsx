@@ -1,19 +1,48 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../../utils/auth.js';
 import styles from './CollectionStatus.module.css';
+import { database } from '../../firebase/firebase.js';
+import { get, onValue, ref } from 'firebase/database';
 
 export default function CollectionStatus() {
-  const [fillPercentage, setFillPercentage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [pevFillPercentage, setPevFillPercentage] = useState(0);
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const point = location.state?.point; // Aqui está o objeto completo
+
   useEffect(() => {
-    setTimeout(() => {
-      setFillPercentage(75); // Simulação de dado do Firebase
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+    setIsLoading(true);
+    const dbRef = ref(database);
+
+    const unsubscribe = onValue(
+      dbRef,
+      (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          const pevStatusId = Object.keys(data).find((k) => k === point.PEVId);
+
+          if (pevStatusId) {
+            setPevFillPercentage(data[pevStatusId].fillPercentage || 0);
+          } else {
+            setPevFillPercentage(0);
+          }
+        } else {
+          console.log("Nenhum dado encontrado.");
+          setPevFillPercentage(0);
+        }
+        setIsLoading(false);
+      },
+      (error) => {
+        console.error(error);
+        setIsLoading(false);
+      }
+    );
+
+    return () => unsubscribe(); // remove o listener quando o componente desmonta
+  }, [point.PEVId, database]);
 
   const handleLogout = async () => {
     await logout();
@@ -48,6 +77,12 @@ export default function CollectionStatus() {
 
       <main className={styles.main}>
         <div className={styles.statusCard}>
+          <div className={styles.pointCard}>
+            <button className={styles.deleteButton}>
+              &#128465;
+            </button>
+            {/* ...restante do card... */}
+          </div>
           <div className={styles.percentageContainer}>
             <div className={styles.percentageCircle}>
               <svg className={styles.percentageFill} viewBox="0 0 36 36">
@@ -62,7 +97,7 @@ export default function CollectionStatus() {
                 />
                 <path
                   className={styles.circleProgress}
-                  strokeDasharray={`${fillPercentage}, 100`}
+                  strokeDasharray={`${pevFillPercentage}, 100`}
                   d="M18 2.0845
                      a 15.9155 15.9155 0 0 1 0 31.831
                      a 15.9155 15.9155 0 0 1 0 -31.831"
@@ -73,12 +108,11 @@ export default function CollectionStatus() {
                 />
               </svg>
               <div className={styles.percentageText}>
-                <span className={styles.percentageNumber}>{fillPercentage}%</span>
+                <span className={styles.percentageNumber}>{pevFillPercentage}%</span>
                 <span className={styles.percentageLabel}>preenchido</span>
               </div>
             </div>
           </div>
-
           <div className={styles.statusInfo}>
             <p className={styles.statusText}>
               Este é o ponto de coleta principal. Acompanhe a taxa de preenchimento em tempo real!
@@ -88,6 +122,7 @@ export default function CollectionStatus() {
           <button onClick={handleViewAllPoints} className={styles.viewAllButton}>
             Ver Todos os Pontos
           </button>
+          
         </div>
       </main>
     </div>

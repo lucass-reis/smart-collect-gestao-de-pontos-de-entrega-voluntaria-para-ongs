@@ -204,6 +204,10 @@
   }
 }
 
+.pointInfo {
+  text-decoration: none;
+}
+
 .pointInfo h3 {
   color: #333;
   font-size: 20px;

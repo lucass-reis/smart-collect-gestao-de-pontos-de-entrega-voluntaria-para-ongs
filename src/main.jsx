@@ -32,7 +32,7 @@ createRoot(document.getElementById('root')).render(
 
         {/* Páginas protegidas */}
         <Route
-          path="/collection-status"
+          path="/collection-status/:id"
           element={
             <ProtectedRoute>
               <CollectionStatus />
