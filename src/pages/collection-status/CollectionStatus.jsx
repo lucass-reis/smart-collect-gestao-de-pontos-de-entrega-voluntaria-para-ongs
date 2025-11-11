@@ -25,7 +25,7 @@ export default function CollectionStatus() {
           const pevStatusId = Object.keys(data).find((k) => k === point.PEVId);
 
           if (pevStatusId) {
-            setPevFillPercentage(data[pevStatusId].fillPercentage || 0);
+            setPevFillPercentage(data[pevStatusId].fillPercentage.toFixed(2) || 0);
           } else {
             setPevFillPercentage(0);
           }
