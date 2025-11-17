@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { isAuthenticated, login } from '../../utils/auth.js';
 import styles from './Login.module.css';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../firebase/firebase.js';
+import { OngContext } from '../../context/OngContext.jsx';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { setOng } = useContext(OngContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -14,7 +18,31 @@ export default function Login() {
     if (!email || !password) return setError('Preencha todos os campos.');
 
     try {
-      await login(email, password);
+      const userCredential = await login(email, password);
+      console.log(userCredential)
+       const q = query(
+          collection(db, "ongs"),
+          where("owner", "==", userCredential.user.uid)
+        );
+  
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          console.warn("Nenhuma ONG encontrada para este usuário.");
+          setOng(null);
+        } else {
+          const doc = snap.docs[0];
+          const ongData = {
+            id: doc.id,
+            ...doc.data(),
+          };
+
+          // 3. Salva a ONG no contexto global
+          setOng(ongData);
+
+          console.log(ongData)
+        }
+        
       navigate('/collection-points');
     } catch (err) {
       console.error(err);

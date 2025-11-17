@@ -19,6 +19,19 @@ body {
   padding: 0 10px;
 }
 
+.explication {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+  width: 70%;
+
+  img {
+    width: 750px;
+    height: 750px;
+  }
+}
+
 /* Seção de Introdução */
 .intro {
   min-height: 100vh;

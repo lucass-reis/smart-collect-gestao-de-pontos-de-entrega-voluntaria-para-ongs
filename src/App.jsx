@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import './App.css';
 import Footer from './components/footer/Footer';
 import Header from './components/Header/Header';
+import organograma from './assets/organograma-smartcollect.svg';
+import { useOng } from "./context/OngContext";
 
 function App() {
   // Animando as seções ao rolar a página
@@ -21,7 +23,10 @@ function App() {
   return (
     <div className="App">
       {/* Cabeçalho */}
-      <Header />
+      <Header>
+        <li><a href="#contato">Contato</a></li>
+        <li><a href="/pev">Encontre um PEV</a></li>
+      </Header>
 
       {/* Seção de Introdução */}
       <section className="intro section">
@@ -39,10 +44,13 @@ function App() {
 
       {/* Seção Sobre */}
       <section id="sobre" className="about section">
-        <div className="container">
-          <h2>O que é o Smart Collect?</h2>
-          <p>O Smart Collect é uma plataforma baseada em IoT que transforma a maneira como as ONGs monitoram e gerenciam pontos de coleta de doações. Com sensores inteligentes, nosso sistema permite acompanhamento em tempo real da ocupação dos pontos de coleta, tornando o processo mais eficiente e transparente.</p>
-          <img src="https://via.placeholder.com/600x400" alt="Imagem explicativa" className="about-img" />
+        <div className="container explication">
+          <div>
+            <h2>O que é o Smart Collect?</h2>
+            <p>O Smart Collect é uma plataforma baseada em IoT que transforma a maneira como as ONGs monitoram e gerenciam pontos de coleta de doações. Com sensores inteligentes, nosso sistema permite acompanhamento em tempo real da ocupação dos pontos de coleta, tornando o processo mais eficiente e transparente.</p>
+          </div>
+          {/* <img src="https://via.placeholder.com/600x400" alt="Imagem explicativa" className="about-img" /> */}
+          <img src={organograma} alt="Imagem explicativa" />
         </div>
       </section>
 

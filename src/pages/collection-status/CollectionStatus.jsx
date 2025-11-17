@@ -2,13 +2,17 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../../utils/auth.js';
 import styles from './CollectionStatus.module.css';
-import { database } from '../../firebase/firebase.js';
-import { get, onValue, ref } from 'firebase/database';
+import { database, db } from '../../firebase/firebase.js';
+import {onValue, ref } from 'firebase/database';
+import Header from '../../components/Header/Header.jsx';
+import { collection, deleteDoc, query, doc, where, getDocs, updateDoc, arrayRemove } from 'firebase/firestore';
+import { useOng } from '../../context/OngContext.jsx';
 
 export default function CollectionStatus() {
   const [isLoading, setIsLoading] = useState(true);
   const [pevFillPercentage, setPevFillPercentage] = useState(0);
   const navigate = useNavigate();
+  const { ong } = useOng();
 
   const location = useLocation();
   const point = location.state?.point; // Aqui está o objeto completo
@@ -51,6 +55,32 @@ export default function CollectionStatus() {
 
   const handleViewAllPoints = () => navigate('/collection-points');
   const handleProfile = () => navigate('/view-profile'); // Novo link para perfil
+  const handleRemovePev = async () => {
+    try {
+      const q = query(
+        collection(db, "ongs"),
+        where("owner", "==", ong.owner)
+      );
+
+      const snapshot = await getDocs(q);
+      if (snapshot.empty) return console.log("ONG não encontrada");
+
+      const ongDoc = snapshot.docs[0];
+      const ongRef = doc(db, "ongs", ongDoc.id);
+
+      const pevRef = doc(db, "collectionPoints", point.id);
+
+      await updateDoc(ongRef, {
+        pevs: arrayRemove(pevRef)
+      });
+
+      await deleteDoc(pevRef);
+
+      navigate('/collection-points');
+    } catch(e) {
+      console.log(e);
+    }
+  }
 
   if (isLoading) {
     return (
@@ -63,22 +93,15 @@ export default function CollectionStatus() {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 onClick={handleViewAllPoints} className={styles.headerTitle}>Smart Collect</h1>
-        <div className={styles.headerActions}>
-          <button onClick={handleProfile} className={styles.logoutButton}>
-            Perfil
-          </button>
-          <button onClick={handleLogout} className={styles.logoutButton}>
-            Sair
-          </button>
-        </div>
-      </header>
+      <Header>
+        <li><a onClick={handleProfile}>Perfil</a></li>
+        <li><a onClick={handleLogout}>Sair</a></li>
+      </Header>
 
       <main className={styles.main}>
         <div className={styles.statusCard}>
           <div className={styles.pointCard}>
-            <button className={styles.deleteButton}>
+            <button onClick={handleRemovePev} className={styles.deleteButton}>
               &#128465;
             </button>
             {/* ...restante do card... */}

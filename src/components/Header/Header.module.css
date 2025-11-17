@@ -14,6 +14,10 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(2px);
 
+  a:hover {
+    cursor: pointer;
+  }
+
   .logo {
     font-size: 28px;
     font-weight: bold;
@@ -40,5 +44,35 @@
 
   nav ul li a:hover {
     opacity: 0.85;
+  }
+
+  img{
+    width: 100px; 
+    height: 100px; 
+  }
+
+  .link {
+      text-decoration: none;
+      color: black;
+  }
+
+  .logoGreenColor {
+      color: #19a352;
+      font-size: 2rem;
+  }
+
+  .logoBlueColor {
+      color: #003366;
+      font-size: 2rem;
+  }
+
+  .flex {
+      display: flex;
+      align-items: center;
+  }
+
+  .logoText {
+      display: flex;
+      gap: .3rem;
   }
 }

@@ -7,11 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import z from 'zod';
 import { logout } from '../../utils/auth.js';
 import styles from './CollectionPoints.module.css';
+import Header from '../../components/Header/Header.jsx';
 
 // Firebase
-import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { addDoc, arrayUnion, collection, doc, getDocs, onSnapshot, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '../../firebase/firebase.js';
 import { getAuth } from 'firebase/auth';
+import { useOng } from '../../context/OngContext.jsx';
 
 const PEVSchema = z.object({
   PEVId: z.string().nonempty("O campo é obrigatório!").min(2, "O código do PEV precisar ter ao menos 2 caracteres"),
@@ -25,6 +27,7 @@ export default function CollectionPoints() {
   const [collectionPoints, setCollectionPoints] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
+  const { ong } = useOng();
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
@@ -56,11 +59,36 @@ export default function CollectionPoints() {
         alert("401 - Unauthorized");
         return;
       }
-      await addDoc(collection(db, "collectionPoints"), {
+
+      const pevRef = await addDoc(collection(db, "collectionPoints"), {
         ...data,
         owner: user.uid,
         createdAt: new Date()
       });
+
+      const q = query(
+        collection(db, "ongs"),
+        where("owner", "==", ong.owner)
+      );
+
+      const snapshot = await getDocs(q);
+
+      if (snapshot.empty) {
+        console.error("Nenhuma ONG encontrada para este owner.");
+        return;
+      }
+
+      // pega o primeiro documento encontrado
+      const ongDoc = snapshot.docs[0];
+
+      // cria referência ao documento da ONG
+      const ongRef = doc(db, "ongs", ongDoc.id);
+
+      // atualiza o array 'pevs'
+      await updateDoc(ongRef, {
+        pevs: arrayUnion(pevRef)
+      });
+
       setToastOpen(true);
       setIsDialogOpen(false);
       reset();
@@ -81,22 +109,19 @@ export default function CollectionPoints() {
   return (
     <Toast.Provider swipeDirection="right">
       <div className={styles.container}>
-        <header className={styles.header}>
-          <h1 className={styles.headerTitle} onClick={handleSmartCollectClick}>
-            Smart Collect
-          </h1>
-          <div className={styles.headerActions}>
-            <a className={styles.profileLink} onClick={handleProfile}>
-              Perfil
-            </a>
-            <button onClick={handleViewStatus} className={styles.statusButton}>
+        <Header>
+          <li><a onClick={handleProfile}>Perfil</a></li>
+          <li>
+            <a onClick={handleViewStatus}>
               Ver Status
-            </button>
-            <button onClick={handleLogout} className={styles.logoutButton}>
+            </a>
+          </li>
+          <li>
+            <a onClick={handleLogout}>
               Sair
-            </button>
-          </div>
-        </header>
+            </a>
+          </li>
+        </Header>
 
         <main className={styles.main}>
           <div className={styles.content}>

@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { register } from '../../utils/auth.js'; 
 import styles from './Cadastro.module.css';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../firebase/firebase.js';
+import { OngContext } from '../../context/OngContext.jsx';
 
 export default function Cadastro() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const { setOng } = useContext(OngContext);
 
   const navigate = useNavigate();
 
@@ -36,7 +40,18 @@ export default function Cadastro() {
 
     try {
       const userCredential = await register(email, password); 
-      console.log('Usuário cadastrado:', userCredential.user);
+
+      const ongData = {
+        email,
+        owner: userCredential.user.uid
+      }
+      
+      await addDoc(collection(db, 'ongs'), {
+        email,
+        owner: userCredential.user.uid
+      });
+
+      setOng(ongData);
 
       setError('');
       navigate('/collection-points');

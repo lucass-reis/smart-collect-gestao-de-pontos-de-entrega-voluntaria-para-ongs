@@ -13,6 +13,8 @@ import ProfilePage from './pages/profile/Profile.jsx';
 import ViewProfile from './pages/profile/ViewProfile.jsx'; 
 import Pev from './pages/pev/Pev.jsx';
 
+import { OngProvider } from './context/OngContext.jsx';
+
 createRoot(document.getElementById('root')).render(
   <Theme
     accentColor="mint"
@@ -21,53 +23,54 @@ createRoot(document.getElementById('root')).render(
     scaling="100%"
     radius="large"
   >
-    <BrowserRouter>
-      <Routes>
-        {/* Páginas públicas */}
-        <Route path="/" element={<App />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Cadastro />} />
-        <Route path="/pev" element={ <Pev />  } />
-         
+    {/* PROVIDER ENVOLVENDO TUDO */}
+    <OngProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Páginas públicas */}
+          <Route path="/" element={<App />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Cadastro />} />
+          <Route path="/pev" element={<Pev />} />
 
-        {/* Páginas protegidas */}
-        <Route
-          path="/collection-status/:id"
-          element={
-            <ProtectedRoute>
-              <CollectionStatus />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/collection-points"
-          element={
-            <ProtectedRoute>
-              <CollectionPoints />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/view-profile"
-          element={
-            <ProtectedRoute>
-              <ViewProfile />
-            </ProtectedRoute>
-          }
-        />
-    
+          {/* Páginas protegidas */}
+          <Route
+            path="/collection-status/:id"
+            element={
+              <ProtectedRoute>
+                <CollectionStatus />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/collection-points"
+            element={
+              <ProtectedRoute>
+                <CollectionPoints />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/view-profile"
+            element={
+              <ProtectedRoute>
+                <ViewProfile />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* Redirecionamento padrão */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    </BrowserRouter>
+          {/* Redirecionamento padrão */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </OngProvider>
   </Theme>
 );

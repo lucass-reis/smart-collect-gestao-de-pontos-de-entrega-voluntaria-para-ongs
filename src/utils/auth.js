@@ -25,6 +25,8 @@ export const login = async (email, password) => {
   const token = await userCredential.user.getIdToken();
 
   setCookie('token', token, 1);
+
+  return userCredential;
 }
 
 export const logout = () => {
