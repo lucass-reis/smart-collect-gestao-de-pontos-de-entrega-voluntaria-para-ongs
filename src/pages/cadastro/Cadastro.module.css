@@ -1,11 +1,9 @@
-/* Reset básico */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Container específico da página de cadastro */
 .registerPageContainer {
   min-height: 100vh;
   display: flex;
@@ -16,10 +14,9 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* Card do cadastro */
 .loginContainer {
-  max-width: 420px;
   width: 100%;
+  max-width: 720px;
   padding: 40px 32px;
   background: #fff;
   border-radius: 14px;
@@ -27,22 +24,30 @@
   border: 1px solid black;
 }
 
-/* Título */
 .loginContainer h2 {
   text-align: center;
   margin-bottom: 20px;
   color: #333;
 }
 
-/* Formulário em coluna */
 form {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
-/* Grupo de inputs */
-.inputGroup {
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
   margin-bottom: 16px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.inputGroup {
   display: flex;
   flex-direction: column;
 }
@@ -69,7 +74,24 @@ form {
   background: #fff;
 }
 
-/* Botão */
+.inputGroup textarea {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background: #fafbff;
+  resize: none;
+  height: 90px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.inputGroup textarea:focus {
+  outline: none;
+  border-color: #66eaa6;
+  box-shadow: 0 0 0 4px rgba(78, 200, 119, 0.35);
+  background: #fff;
+}
+
 .loginButton {
   width: 100%;
   padding: 12px;
@@ -92,7 +114,6 @@ form {
   transform: translateY(1px);
 }
 
-/* Erro */
 .error {
   color: #e74c3c;
   margin-top: 12px;
@@ -100,7 +121,6 @@ form {
   text-align: center;
 }
 
-/* Link */
 span {
   display: block;
   text-align: center;
@@ -116,4 +136,10 @@ span a {
 
 span a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 750px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
 }
