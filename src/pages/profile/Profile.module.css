@@ -78,7 +78,7 @@
 /* Conteúdo */
 .content {
   max-width: 900px;
-  margin: -60px auto 40px;
+  margin: 60px auto 40px;
   background: white;
   border-radius: 20px;
   padding: 30px;
@@ -144,6 +144,7 @@
   flex-direction: column;
   gap: 15px;
   width: 100%;
+  margin-bottom: 1rem;
 }
 
 .row {
@@ -202,6 +203,47 @@ textarea {
 .saveButton:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(78,84,200,0.3);
+}
+
+.formRow {
+  display: flex;       /* caso o Flex do Radix não esteja aplicando display */
+  gap: 16px;
+  width: 600px;        /* ou use 100% para ser responsivo */
+}
+
+/* garante que cada coluna ocupe metade e possa encolher corretamente */
+.col {
+  flex: 1;
+  min-width: 0;        /* CRÍTICO para evitar overflow em flexboxes */
+}
+
+/* style para cada label (opcional) */
+.label {
+  display: block;
+  margin-bottom: .7rem;
+}
+
+/* força o TextField (e o input interno) a ocupar toda a largura disponível */
+.fullWidth {
+  width: 100% !important;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* caso o TextField.Root não aplique width ao input, aplicamos diretamente no input interno */
+.fullWidth input,
+.fullWidth textarea {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+.errorMessage {
+  color: red;
+  text-align: left;
+  margin-top: .1rem;
+  font-size: .7rem;
+  font-weight: bold;
+  position: absolute;
 }
 
 /* Responsividade */

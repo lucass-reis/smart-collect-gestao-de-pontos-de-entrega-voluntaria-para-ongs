@@ -104,7 +104,6 @@ export default function CollectionPoints() {
   const handleAddPoint = () => setIsDialogOpen(true);
   const handleViewStatus = () => navigate('/collection-status');
   const handleProfile = () => navigate('/view-profile');
-  const handleSmartCollectClick = () => navigate('/collection-points');
 
   return (
     <Toast.Provider swipeDirection="right">
@@ -146,7 +145,7 @@ export default function CollectionPoints() {
                       <Text as="div" size="2" mb="1" weight="bold">
                         Código do PEV
                       </Text>
-                      <TextField.Root placeholder="Digite um código de identificação para o PEV" {...register("PEVId")} />
+                      <TextField.Root placeholder="Digite código cadastrado no momento da instalação do PEV" {...register("PEVId")} />
                       {errors.PEVId && <span className={styles.errorMessage}>{errors.PEVId.message}</span>}
                     </label>
                     <label className={styles.inputStyle}>
