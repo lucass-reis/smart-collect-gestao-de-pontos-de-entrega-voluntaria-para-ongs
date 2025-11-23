@@ -138,7 +138,7 @@ export default function CollectionStatus() {
           </div>
           <div className={styles.statusInfo}>
             <p className={styles.statusText}>
-              Este é o ponto de coleta principal. Acompanhe a taxa de preenchimento em tempo real!
+              Este é o status de preenchimento do ponto de coleta. Acompanhe em tempo real!
             </p>
           </div>
 

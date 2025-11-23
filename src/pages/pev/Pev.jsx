@@ -56,23 +56,19 @@ export default function Pev() {
           <div className={styles.grid}>
             {ongs.map((ong, index) => (
               <div key={index} className={styles.card}>
-                <h3 className={styles.cardTitle}>{ong.nome ?? "Nome não cadastrado"}</h3>
-                <p className={styles.descricao}>{ong.descricao ?? ""}</p>
+                <h3 className={styles.cardTitle}>{ong.name || "Nome não cadastrado"}</h3>
+                <p className={styles.descricao}>{ong.descricao || ""}</p>
 
                 <div className={styles.row}>
                   <div className={styles.infoBlock}>
                     <h4>Missão</h4>
-                    <p>{ong.missao ?? 'Missão não definida'}</p>
-                  </div>
-                  <div className={styles.infoBlock}>
-                    <h4>Visão</h4>
-                    <p>{ong.visao ?? "Visão não definida"}</p>
+                    <p>{ong.mission || 'Missão não definida'}</p>
                   </div>
                 </div>
 
                 <div className={styles.contactInfo}>
-                  <p>📞 {ong.telefone ?? "Contato não cadastrado"}</p>
-                  <p>✉️ {ong.email ?? "Email não cadastrado"}</p>
+                  <p>📞 {ong.phone || "Contato não cadastrado"}</p>
+                  <p>✉️ {ong.email || "Email não cadastrado"}</p>
                   <p>📍 Pontos de coleta:</p>
                   <ul>
                     {ong.pevs?.map((ref, i) => (
