@@ -1,31 +1,52 @@
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Footer from './components/footer/Footer';
 import Header from './components/Header/Header';
 import organograma from './assets/organograma-smartcollect.svg';
-import { useOng } from "./context/OngContext";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "./firebase/firebase";
+import { PevItem } from "./components/pevIten/PevItem";
 
 function App() {
-  // Animando as seções ao rolar a página
-  useEffect(() => {
-    const sections = document.querySelectorAll('.section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle('active', entry.isIntersecting);
-      });
-    }, { threshold: 0.3 });
+  const [ongs, setOngs] = useState([]);
+  
+    useEffect(() => {
+      async function loadOngs() {
+        try {
+          const ongRef = collection(db, "ongs");
+          const querySnapshot = await getDocs(ongRef);
+  
+          const lista = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+  
+          setOngs(lista);
+        } catch (err) {
+          console.error("Erro ao carregar ONGs:", err);
+        }
+      }
+  
+      loadOngs();
 
-    sections.forEach((section) => observer.observe(section));
-  }, []);
+      const sections = document.querySelectorAll('.section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('active', entry.isIntersecting);
+        });
+      }, { threshold: 0.3 });
+
+      sections.forEach((section) => observer.observe(section));
+    }, []);
 
   return (
     <div className="App">
       {/* Cabeçalho */}
       <Header>
         <li><a href="#contato">Contato</a></li>
-        <li><a href="/pev">Encontre um PEV</a></li>
+        <li><a href="#pev">Encontre um PEV</a></li>
       </Header>
 
       {/* Seção de Introdução */}
@@ -92,6 +113,53 @@ function App() {
               <p>"Com o Smart Collect, conseguimos monitorar e otimizar a coleta em tempo real, aumentando o engajamento da comunidade."</p>
               <span>- Cidadania Ativa</span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Seção de encontre um PEV */}
+      <section id="pev" className="find-a-pev section">
+        <div className="container">
+          <h2>Encontre um PEV de uma ONG parceira!</h2>
+          <div className="page">
+              <div className="container">
+                <div className="grid">
+                  {ongs.map((ong, index) => (
+                    <div key={index} className="card">
+                      <h3 className="cardTitle">{ong.name || "Nome não cadastrado"}</h3>
+                      <p className="descricao">{ong.descricao || ""}</p>
+      
+                      <div className="row">
+                        <div className="infoBlock">
+                          <h4>Missão</h4>
+                          <p>{ong.mission || 'Missão não definida'}</p>
+                        </div>
+                      </div>
+      
+                      <div className="contactInfo">
+                        <p>📞 {ong.phone || "Contato não cadastrado"}</p>
+                        <p>✉️ {ong.email || "Email não cadastrado"}</p>
+                        <p>📍 Pontos de coleta:</p>
+                        <ul>
+                          {ong.pevs?.map((ref, i) => (
+                              <PevItem key={i} ref={ref} />
+                            ))
+                          }
+                        </ul>
+                      </div>
+      
+                      {ong.website && (
+                        <div className="socials">
+                          <a href={ong.website} target="_blank" rel="noreferrer">Site</a>
+                        </div>
+                      )}
+      
+                  
+                    </div>
+                  ))}
+                </div>
+                <div style={{ height: "100px" }}></div>
+              </div>
           </div>
         </div>
       </section>
