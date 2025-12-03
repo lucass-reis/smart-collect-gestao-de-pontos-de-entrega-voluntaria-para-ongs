@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../utils/auth.js";
 import styles from "./Profile.module.css";
+import Footer from "../../components/footer/Footer.jsx";
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState({
@@ -215,6 +216,8 @@ export default function ProfilePage() {
           Salvar Alterações
         </button>
       </div>
+      {/* Rodapé */}
+      <Footer />  
     </div>
   );
 }

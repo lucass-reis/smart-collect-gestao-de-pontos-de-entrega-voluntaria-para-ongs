@@ -7,6 +7,9 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
+import Footer from '../../components/footer/Footer';
+import santos from "../../assets/santos.png";
+import { useEffect, useState } from "react";
 
 const OngSchema = z.object({
   phone: z.string().min(8, "Telefone inválido"),
@@ -25,28 +28,71 @@ const OngSchema = z.object({
 
 export default function ViewProfile() {
   const { ong } = useOng();
+
+  // Agora usando o estado corretamente
+  const [profileImage, setProfileImage] = useState(santos);
+
   const { register, handleSubmit, formState: { errors } } = useForm({
-      resolver: zodResolver(OngSchema)
-    });
+    resolver: zodResolver(OngSchema)
+  });
 
   const onSubmit = async (data) => {
     try {
-      const ref = doc(db, "ongs", ong.id);
-
-      await updateDoc(ref, data);
-
+      const refDoc = doc(db, "ongs", ong.id);
+      await updateDoc(refDoc, data);
       alert("Perfil atualizado com sucesso!");
     } catch (err) {
       console.error(err);
       alert("Erro ao atualizar perfil");
     }
-  }
+  };
+
+  useEffect(() => {
+    if (ong?.profileImage) {
+      setProfileImage(`http://localhost:3001/uploads/${ong.profileImage}`);
+    }
+  }, [ong]);
+
+  const handleSelectImage = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("arquivo", file);
+
+    try {
+      const response = await fetch("http://localhost:3001/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!data.fileName) {
+        alert("Erro ao enviar imagem");
+        return;
+      }
+
+      // URL correta do backend
+      const fileUrl = `http://localhost:3001/uploads/${data.fileName}`;
+
+      // Atualiza a imagem no front
+      setProfileImage(fileUrl);
+
+      // Atualiza Firebase
+      const ref = doc(db, "ongs", ong.id);
+      await updateDoc(ref, { profileImage: data.fileName });
+
+      console.log("Imagem salva no Firebase:", data.fileName);
+    } catch (error) {
+      console.error("Erro ao enviar imagem:", error);
+    }
+  };
 
   return (
     <div className={styles.container}>
       <Header>
         <li><a href="/collection-points">Voltar</a></li>
-        <li><a href="/pev">Editar</a></li>
       </Header>
 
       {/* Banner */}
@@ -62,6 +108,31 @@ export default function ViewProfile() {
         {/* Perfil */}
         <div className={styles.profileHeader}>
           <h1>{ong?.name}</h1>
+
+          {/* Input oculto */}
+          <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleSelectImage}
+          />
+
+          {/* Imagem clicável */}
+          <div
+            className={styles.photoWrapper}
+            onClick={() => document.getElementById("fileInput").click()}
+          >
+            <img
+              className={styles.ongLogo}
+              src={profileImage}
+              alt="Logo da ONG"
+              onError={(e) => {
+                console.log(e)
+                setProfileImage(santos)
+              }}
+            />
+          </div>
         </div>
 
         {/* Dados */}
@@ -94,6 +165,7 @@ export default function ViewProfile() {
           <p><strong>Missão:</strong> {ong?.mission || "-"}</p>
         </div>
 
+        {/* Modal de edição */}
         <Dialog.Root>
           <Dialog.Trigger>
             <Button>Editar perfil</Button>
@@ -106,6 +178,7 @@ export default function ViewProfile() {
             </Dialog.Description>
 
             <Flex direction="row" justify="between" width="600px" gap="4" className={styles.formRow}>
+              
               {/* Lado esquerdo */}
               <Flex direction="column" gap="3" className={styles.col}>
                 <label className={styles.label}>
@@ -159,12 +232,9 @@ export default function ViewProfile() {
               </Flex>
             </Flex>
 
-
             <Flex gap="3" mt="4" justify="end">
               <Dialog.Close>
-                <Button variant="soft" color="gray">
-                  Cancelar
-                </Button>
+                <Button variant="soft" color="gray">Cancelar</Button>
               </Dialog.Close>
               <Dialog.Close>
                 <Button onClick={handleSubmit(onSubmit)}>Salvar</Button>
@@ -173,6 +243,8 @@ export default function ViewProfile() {
           </Dialog.Content>
         </Dialog.Root>
       </div>
+
+      <Footer />
     </div>
   );
 }

@@ -230,6 +230,17 @@ body {
   scroll-margin-top: 180px;
 }
 
+.ong-logo {
+  text-align: center;
+
+  img {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
 /* Formulário de Contato */
 .contact {
   padding: 100px 20px;
@@ -368,6 +379,7 @@ body {
   font-size: 22px;
   margin-bottom: 8px;
   min-height: 28px;
+  text-align: center;
 }
 
 .descricao {

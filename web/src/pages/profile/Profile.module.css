@@ -6,6 +6,7 @@
   background: #f5f7f9;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .header {
@@ -87,8 +88,28 @@
 
 .profileHeader {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 22px;
+
+  h1 {
+    width: 100%;
+    text-align: center;
+  }
+
+  .ongLogo {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .ongLogo:hover {
+    opacity: 0.7;
+    transform: translateY(-4px);
+    cursor: pointer;
+  }
 }
 
 .profileImageWrapper {

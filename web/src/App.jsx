@@ -8,6 +8,7 @@ import organograma from './assets/organograma-smartcollect.svg';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase/firebase";
 import { PevItem } from "./components/pevIten/PevItem";
+import santos from "./assets/santos.png"
 
 function App() {
   const [ongs, setOngs] = useState([]);
@@ -126,35 +127,41 @@ function App() {
                 <div className="grid">
                   {ongs.map((ong, index) => (
                     <div key={index} className="card">
-                      <h3 className="cardTitle">{ong.name || "Nome não cadastrado"}</h3>
-                      <p className="descricao">{ong.descricao || ""}</p>
-      
-                      <div className="row">
-                        <div className="infoBlock">
-                          <h4>Missão</h4>
-                          <p>{ong.mission || 'Missão não definida'}</p>
-                        </div>
+                      <div className="ong-logo">
+                        <img src={ong.profileImage 
+                          ? `http://localhost:3001/uploads/${ong.profileImage}`
+                          : santos
+                        }/>
                       </div>
-      
-                      <div className="contactInfo">
-                        <p>📞 {ong.phone || "Contato não cadastrado"}</p>
-                        <p>✉️ {ong.email || "Email não cadastrado"}</p>
-                        <p>📍 Pontos de coleta:</p>
-                        <ul>
-                          {ong.pevs?.map((ref, i) => (
-                              <PevItem key={i} ref={ref} />
-                            ))
-                          }
-                        </ul>
-                      </div>
-      
-                      {ong.website && (
-                        <div className="socials">
-                          <a href={ong.website} target="_blank" rel="noreferrer">Site</a>
+                      <div className="content">
+                        <h3 className="cardTitle">{ong.name || "Nome não cadastrado"}</h3>
+                        <p className="descricao">{ong.descricao || ""}</p>
+        
+                        <div className="row">
+                          <div className="infoBlock">
+                            <h4>Missão</h4>
+                            <p>{ong.mission || 'Missão não definida'}</p>
+                          </div>
                         </div>
-                      )}
-      
-                  
+        
+                        <div className="contactInfo">
+                          <p>📞 {ong.phone || "Contato não cadastrado"}</p>
+                          <p>✉️ {ong.email || "Email não cadastrado"}</p>
+                          <p>📍 Pontos de coleta:</p>
+                          <ul>
+                            {ong.pevs?.map((ref, i) => (
+                                <PevItem key={i} ref={ref} />
+                              ))
+                            }
+                          </ul>
+                        </div>
+        
+                        {ong.website && (
+                          <div className="socials">
+                            <a href={ong.website} target="_blank" rel="noreferrer">Site</a>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -178,7 +185,7 @@ function App() {
       </section>
 
       {/* Rodapé */}
-      <Footer />
+      <Footer/>
     </div>
   );
 }
