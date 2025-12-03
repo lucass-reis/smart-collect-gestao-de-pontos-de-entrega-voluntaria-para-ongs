@@ -129,7 +129,7 @@ function App() {
                     <div key={index} className="card">
                       <div className="ong-logo">
                         <img src={ong.profileImage 
-                          ? `http://localhost:3001/uploads/${ong.profileImage}`
+                          ? `${import.meta.env.VITE_API_URL}/uploads/${ong.profileImage}`
                           : santos
                         }/>
                       </div>

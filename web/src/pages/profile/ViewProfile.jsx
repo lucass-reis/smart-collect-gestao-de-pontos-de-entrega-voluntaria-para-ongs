@@ -1,4 +1,4 @@
-import styles from "./profile.module.css";
+import styles from "./Profile.module.css";
 import Header from "../../components/Header/Header";
 import { useOng } from "../../context/OngContext";
 import { Button, Dialog, Flex, TextField, Text } from "@radix-ui/themes";
@@ -49,7 +49,7 @@ export default function ViewProfile() {
 
   useEffect(() => {
     if (ong?.profileImage) {
-      setProfileImage(`http://localhost:3001/uploads/${ong.profileImage}`);
+      setProfileImage(`${import.meta.env.VITE_API_URL}/uploads/${ong.profileImage}`);
     }
   }, [ong]);
 
@@ -61,7 +61,7 @@ export default function ViewProfile() {
     formData.append("arquivo", file);
 
     try {
-      const response = await fetch("http://localhost:3001/upload", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
         method: "POST",
         body: formData,
       });
@@ -74,7 +74,7 @@ export default function ViewProfile() {
       }
 
       // URL correta do backend
-      const fileUrl = `http://localhost:3001/uploads/${data.fileName}`;
+      const fileUrl = `${import.meta.env.VITE_API_URL}/uploads/${data.fileName}`;
 
       // Atualiza a imagem no front
       setProfileImage(fileUrl);
