@@ -7,6 +7,7 @@ import {onValue, ref } from 'firebase/database';
 import Header from '../../components/Header/Header.jsx';
 import { collection, deleteDoc, query, doc, where, getDocs, updateDoc, arrayRemove } from 'firebase/firestore';
 import { useOng } from '../../context/OngContext.jsx';
+import { AlertDialog, Button, Flex } from '@radix-ui/themes';
 
 export default function CollectionStatus() {
   const [isLoading, setIsLoading] = useState(true);
@@ -101,9 +102,33 @@ export default function CollectionStatus() {
       <main className={styles.main}>
         <div className={styles.statusCard}>
           <div className={styles.pointCard}>
-            <button onClick={handleRemovePev} className={styles.deleteButton}>
-              &#128465;
-            </button>
+            {/* Modal de confirmacao de exclusao de PEV */}
+            <AlertDialog.Root>
+              <AlertDialog.Trigger>
+                <button className={styles.deleteButton}>
+                  &#128465;
+                </button>
+              </AlertDialog.Trigger>
+              <AlertDialog.Content maxWidth="450px">
+                <AlertDialog.Title>Revoke access</AlertDialog.Title>
+                <AlertDialog.Description size="2">
+                  Tem certeza? Ao remover um PEV, ele não estará mais acessível através do SmartCollect.
+                </AlertDialog.Description>
+
+                <Flex gap="3" mt="4" justify="end">
+                  <AlertDialog.Cancel>
+                    <Button variant="soft" color="gray">
+                      Não, vou manter
+                    </Button>
+                  </AlertDialog.Cancel>
+                  <AlertDialog.Action>
+                    <Button onClick={handleRemovePev} variant="solid" color="red">
+                      Tenho
+                    </Button>
+                  </AlertDialog.Action>
+                </Flex>
+              </AlertDialog.Content>
+            </AlertDialog.Root>
             {/* ...restante do card... */}
           </div>
           <div className={styles.percentageContainer}>
